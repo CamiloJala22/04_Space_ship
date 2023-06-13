@@ -5,10 +5,11 @@ from game.utils.constants import SPACESHIP, SCREEN_HEIGHT, SCREEN_WIDTH
 class Spaceship(Sprite):
     X_POS = ( SCREEN_WIDTH // 2) - 40
     Y_POS = 500
+    size_spaceship = [40, 60]
 
     def __init__(self):
         self.image = SPACESHIP
-        self.image = pygame.transform.scale(self.image, (40, 60))
+        self.image = pygame.transform.scale(self.image, (self.size_spaceship[0], self.size_spaceship[1]))
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
@@ -18,13 +19,13 @@ class Spaceship(Sprite):
             self.rect.x = self.rect.x - 10
         #Si la nave es = 0, entonces se cambia por el valor que tiene la pantanlla en el eje x
         else: 
-             self.rect.x = SCREEN_WIDTH
+             self.rect.x = SCREEN_WIDTH #Menos para que no se esconda
     def move_right(self):
         if self.rect.right < SCREEN_WIDTH:
             self.rect.x = self.rect.x + 10
         #Igual que el la linea 20 pero al rebes 
         else: 
-            self.rect.x = 0
+            self.rect.x = -self.size_spaceship[0]
     def move_up(self):
         if self.rect.y > SCREEN_HEIGHT // 2: 
             self.rect.y = self.rect.y - 10
