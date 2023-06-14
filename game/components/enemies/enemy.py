@@ -2,7 +2,7 @@ import pygame
 import random
 
 from pygame.sprite import Sprite
-from game.utils.constants import ENEMY_1, ENEMY_2, ENEMY_3, SCREEN_HEIGHT, SCREEN_WIDTH
+from game.utils.constants import ENEMIS, SCREEN_HEIGHT, SCREEN_WIDTH
 
 class Enemy(Sprite):
     Y_POS = 20 
@@ -10,10 +10,9 @@ class Enemy(Sprite):
     SPEED_X = 5
     SPEED_Y = 1
     MOD_X = {0: 'left', 1: 'right'}
-    images = [ENEMY_2, ENEMY_1, ENEMY_3]
 
     def __init__(self):
-        self.image = self.images[random.randint(0,2)]
+        self.image = ENEMIS[random.randint(0,2)]
         self.image = pygame.transform.scale(self.image, (40,60))
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS_LIST[random.randint(0,10)]
