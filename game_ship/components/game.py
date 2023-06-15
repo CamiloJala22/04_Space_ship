@@ -1,7 +1,8 @@
 import pygame
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
-from game.components.spaceship import Spaceship
-from game.components.enemies.enemy_manager import EnemyManager
+from game_ship.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from game_ship.components.spaceship import Spaceship
+from game_ship.components.enemies.enemy_manager import EnemyManager
+from game_ship.components.bullets.bullet_manager import BulletManager
 
 class Game:
     def __init__(self):
@@ -16,6 +17,7 @@ class Game:
         self.y_pos_bg = 0
         self.player = Spaceship()
         self.enemy_manager = EnemyManager()
+        self.bullet_manager = BulletManager()
 
     def run(self): 
         self.playing = True
@@ -34,7 +36,8 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
-        self.enemy_manager.update()
+        self.enemy_manager.update(self)
+        self.bullet_manager.update(self)
 
     def draw(self): 
         self.clock.tick(FPS)
@@ -42,6 +45,7 @@ class Game:
         self.draw_background()
         self.player.draw(self.screen)
         self.enemy_manager.draw(self.screen)
+        self.bullet_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
@@ -54,5 +58,5 @@ class Game:
         if self.y_pos_bg >= SCREEN_HEIGHT:
             self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_heigth))
             self.y_pos_bg = 0 
-        self.y_pos_bg = self.y_pos_bg + self.game_speed
+        self.y_pos_bg += self.game_speed
 
