@@ -7,7 +7,9 @@ from game.components.bullets.bullet_manager import BulletManager
 from game.components.menu import Menu
 
 class Game:
-    CURRENT_LEVEL= int(input("enter desired game level: "))
+    HALF_SCREEN_HEIGHT = SCREEN_HEIGHT // 2
+    HALF_SCREEN_WIDTH = SCREEN_WIDTH // 2
+
     def __init__(self):
         self.scores = []
         self.best_score = 0
@@ -28,7 +30,7 @@ class Game:
         self.running = False
         self.score = 0
         self.death_count = 0
-        self.menu = Menu('Press any key to start...', self.screen)
+        self.menu = Menu('Press any key to start...', self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT, self.screen)
         
     def execute(self):
         self.running = True
@@ -56,7 +58,7 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input, self)
-        self.enemy_manager.update(self, self.CURRENT_LEVEL)
+        self.enemy_manager.update(self)
         self.bullet_manager.update(self)
     
     def draw(self):
@@ -84,19 +86,19 @@ class Game:
         
     def show_menu(self):
         self.menu.reset_screen_color(self.screen)
-        half_screen_height = SCREEN_HEIGHT //2
-        half_screen_width = SCREEN_WIDTH //2
+        half_screen_height = SCREEN_HEIGHT // 2
+        half_screen_width = SCREEN_WIDTH // 2
         
         if self.death_count == 0:
             self.menu.draw(self.screen)
         else:
-            self.menu.update_message("Game over.", 0)
+            self.menu.update_message("Game over.", self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT)
             self.menu.draw(self.screen)
-            self.menu.update_message(f'Your score: {self.score}', 50)
+            self.menu.update_message(f'Your score: {self.score}', self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 50)
             self.menu.draw(self.screen)
-            self.menu.update_message(f'Highest score: {self.best_score}', 100)
+            self.menu.update_message(f'Highest score: {self.best_score}', self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 100)
             self.menu.draw(self.screen)
-            self.menu.update_message(f'Total deaths: {self.death_count}', 150)
+            self.menu.update_message(f'Total deaths: {self.death_count}', self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 150)
             self.menu.draw(self.screen)
             
         icon = pygame.transform.scale(ICON, (80,120))

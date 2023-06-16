@@ -4,6 +4,7 @@ import random
 from pygame.sprite import Sprite
 from game.utils.constants import ENEMIS, SCREEN_HEIGHT, SCREEN_WIDTH
 from game.components.bullets.bullet import Bullet
+import random
 
 class Enemy(Sprite):
     scale_enm = [40, 60]
@@ -12,10 +13,9 @@ class Enemy(Sprite):
     SPEED_X = 5
     SPEED_Y = 1
     MOV_X = {0: 'left', 1: 'right'}
-    IMAGE = {1: ENEMIS[0], 2: ENEMIS[1], 3: ENEMIS[2]}
-    
+  
     def __init__(self, image= 1, speed_x = SPEED_X, speed_y = SPEED_Y, move_x_for = [30,100]):
-        self.image = self.IMAGE[image]
+        self.image = ENEMIS[random.randint(0,2)]
         self.image = pygame.transform.scale(self.image, (self.scale_enm[0], self.scale_enm[1]))
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS_LIST[random.randint(0,10)]
