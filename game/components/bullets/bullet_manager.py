@@ -1,5 +1,6 @@
 import pygame
 from game.components.enemies.enemy import Enemy
+from game.utils.constants import SHIELD_TYPE
 
 class BulletManager:
     def __init__(self):
@@ -12,10 +13,10 @@ class BulletManager:
             
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
                 self.enemy_bullets.remove(bullet)
-                game.playing = False
-                print("GAME OVER")
-                pygame.time.delay(1000)
-                game.death_count += 1
+                if game.player.power_up_type != SHIELD_TYPE:
+                    game.playing = False
+                    pygame.time.delay(1000)
+                    game.death_count += 1
                 break
             
         for bullet in self.bullets:
